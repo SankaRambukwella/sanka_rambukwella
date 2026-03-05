@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Sanka Rambukwella | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<style>
+/* ─── Variables ─────────────────────────────── */
+:root{
+  --bg:#111111; --bg2:#1a1a1a; --bg3:#222;
+  --yellow:#f5c518; --yellow2:#e6b800;
+  --white:#ffffff; --gray:#888; --gray2:#555; --text:#e8e8e8;
+  --border:rgba(255,255,255,0.08);
+  --radius:999px;
+  --font:'Syne',sans-serif; --body:'DM Sans',sans-serif;
+  --panel-h: 520px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:var(--body);background:var(--bg);color:var(--text);overflow:hidden;}
+a{text-decoration:none;color:inherit;}
+button{border:none;background:none;cursor:pointer;font-family:var(--body);}
+input,textarea{font-family:var(--body);}
+svg{display:block;}
+
+/* ─── Rotated side names ─────────────────────── */
+.side-name{position:fixed;top:50%;writing-mode:vertical-rl;font-family:var(--font);font-size:0.9rem;font-weight:800;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.05);white-space:nowrap;pointer-events:none;z-index:1;user-select:none;}
+.side-name.left{left:20px;transform:translateY(-50%) rotate(180deg);}
+.side-name.right{right:20px;transform:translateY(-50%);}
+
+/* ─── Topbar ─────────────────────────────────── */
+.topbar{position:fixed;top:0;left:0;right:0;height:58px;display:flex;align-items:center;justify-content:flex-end;padding:0 28px;z-index:300;}
+.topbar-btns{display:flex;gap:9px;}
+.topbar-btn{width:38px;height:38px;border-radius:50%;background:var(--bg2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:border-color .2s,color .2s;}
+.topbar-btn:hover{border-color:var(--yellow);color:var(--yellow);}
+.topbar-btn svg{width:15px;height:15px;}
+
+/* ─── Hero — full viewport, perfectly centred ── */
+.hero{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:60px 80px 120px;
+  overflow:hidden;
+  transition:transform .5s cubic-bezier(.4,0,.2,1), filter .5s ease;
+  z-index:10;
+}
+.hero.pushed{
+  transform:translateY(-60px);
+  filter:brightness(0.55);
+  pointer-events:none;
+}
+
+.hello-badge{display:inline-flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:5px 18px;font-size:0.82rem;font-weight:500;color:var(--text);margin-bottom:18px;position:relative;}
+.hello-badge .q{color:var(--yellow);font-size:1.1rem;font-family:Georgia,serif;line-height:1;}
+.hello-badge .q2{position:absolute;top:-4px;right:6px;color:var(--yellow);font-size:0.85rem;font-family:Georgia,serif;}
+
+.hero-heading{font-family:var(--font);font-size:clamp(2.4rem,5vw,5rem);font-weight:800;line-height:1.06;text-align:center;color:var(--white);}
+.hero-heading .yellow{color:var(--yellow);}
+
+/* roles ticker */
+.roles-wrap{margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;}
+.role-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:var(--radius);background:rgba(255,255,255,0.04);border:1px solid var(--border);font-size:0.76rem;font-weight:500;color:var(--gray);animation:fadeUp .6s ease both;}
+.role-pill .dot{width:5px;height:5px;border-radius:50%;background:var(--yellow);}
+.role-pill:nth-child(1){animation-delay:.1s;}
+.role-pill:nth-child(2){animation-delay:.2s;}
+.role-pill:nth-child(3){animation-delay:.3s;}
+.role-pill:nth-child(4){animation-delay:.4s;}
+.role-pill:nth-child(5){animation-delay:.5s;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* hero stage (photo + sides) */
+.hero-stage{position:relative;width:100%;max-width:860px;display:flex;align-items:flex-end;justify-content:center;margin-top:8px;min-height:280px;}
+
+.testimonial-block{position:absolute;left:0;top:50%;transform:translateY(-50%);max-width:220px;}
+.quote-mark{display:block;font-size:2.8rem;color:var(--yellow);font-family:Georgia,serif;line-height:0.8;margin-bottom:8px;}
+.testimonial-text{font-size:0.77rem;font-style:italic;color:var(--gray);line-height:1.65;margin-bottom:8px;}
+.testimonial-author{font-size:0.72rem;font-weight:600;color:var(--text);}
+
+.photo-wrap{position:relative;display:flex;justify-content:center;align-items:flex-end;z-index:2;}
+.photo-circle-bg{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:220px;height:220px;border-radius:50%;background:var(--yellow);z-index:1;}
+.hero-photo{position:relative;z-index:2;height:290px;width:auto;object-fit:cover;object-position:top center;filter:drop-shadow(0 16px 40px rgba(0,0,0,0.55));}
+.hero-photo-fallback{position:relative;z-index:2;height:290px;width:210px;display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:4.5rem;font-weight:800;color:var(--yellow);}
+
+.hero-btns-block{position:absolute;right:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:11px;}
+.hero-btn{padding:13px 28px;border-radius:var(--radius);font-family:var(--font);font-size:0.85rem;font-weight:700;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s;white-space:nowrap;text-align:center;}
+.hero-btn:hover{transform:translateY(-2px);}
+.hero-btn.primary{background:var(--yellow);color:#111;border:none;box-shadow:0 8px 24px rgba(245,197,24,0.22);}
+.hero-btn.primary:hover{background:var(--yellow2);box-shadow:0 12px 32px rgba(245,197,24,0.35);}
+.hero-btn.outline{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,0.25);}
+.hero-btn.outline:hover{border-color:var(--white);}
+
+/* ─── Chat trigger button (FAB) ──────────────── */
+.chat-fab{
+  position:fixed;bottom:28px;right:28px;
+  width:54px;height:54px;border-radius:50%;
+  background:var(--yellow);color:#111;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 28px rgba(245,197,24,0.35);
+  z-index:400;
+  transition:transform .25s,box-shadow .25s,background .2s;
+  cursor:pointer;border:none;
+}
+.chat-fab:hover{transform:scale(1.08);box-shadow:0 12px 36px rgba(245,197,24,0.45);background:var(--yellow2);}
+.chat-fab svg{width:22px;height:22px;transition:transform .3s;}
+.chat-fab.open svg.icon-chat{display:none;}
+.chat-fab.open svg.icon-close{display:block;}
+.chat-fab svg.icon-close{display:none;}
+.chat-fab-pulse{position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(245,197,24,0.35);animation:pulse-ring 2.5s ease-out infinite;}
+@keyframes pulse-ring{0%{transform:scale(1);opacity:.8;}100%{transform:scale(1.5);opacity:0;}}
+
+/* ─── Chat panel (slides up from bottom) ──────── */
+.chat-panel{
+  position:fixed;bottom:0;left:0;right:0;
+  height:var(--panel-h);
+  background:#161616;
+  border-top:1px solid rgba(255,255,255,0.09);
+  border-radius:24px 24px 0 0;
+  display:flex;flex-direction:column;
+  z-index:350;
+  transform:translateY(100%);
+  transition:transform .45s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 -20px 60px rgba(0,0,0,0.7);
+}
+.chat-panel.open{transform:translateY(0);}
+
+/* panel drag handle */
+.panel-handle{flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:12px 0 4px;}
+.panel-handle-bar{width:38px;height:4px;border-radius:4px;background:rgba(255,255,255,0.12);}
+
+/* panel header */
+.panel-header{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 18px 10px;}
+.panel-header-left{display:flex;align-items:center;gap:10px;}
+.panel-av{width:32px;height:32px;border-radius:50%;background:var(--yellow);display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:0.65rem;font-weight:800;color:#111;flex-shrink:0;}
+.panel-title{font-family:var(--font);font-size:0.88rem;font-weight:700;color:var(--white);}
+.panel-subtitle{font-size:0.7rem;color:var(--gray);display:flex;align-items:center;gap:5px;}
+.panel-online{width:6px;height:6px;border-radius:50%;background:#48bb78;box-shadow:0 0 6px #48bb78;animation:pulse-status 2.5s ease-in-out infinite;}
+@keyframes pulse-status{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.6;transform:scale(1.3);}}
+.panel-close{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:background .2s,color .2s;}
+.panel-close:hover{background:rgba(255,255,255,0.1);color:var(--white);}
+.panel-close svg{width:14px;height:14px;}
+
+/* panel divider */
+.panel-divider{height:1px;background:rgba(255,255,255,0.06);flex-shrink:0;margin:0 18px;}
+
+/* chat messages area */
+.chat-feed{flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.06) transparent;}
+.chat-feed::-webkit-scrollbar{width:4px;}
+.chat-feed::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.06);border-radius:4px;}
+
+.msg-row{display:flex;gap:9px;align-items:flex-end;animation:popIn .3s ease both;}
+.msg-row.user{flex-direction:row-reverse;}
+@keyframes popIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.msg-av{width:28px;height:28px;border-radius:50%;background:var(--yellow);display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:0.58rem;font-weight:800;color:#111;flex-shrink:0;}
+.bubble{max-width:72%;padding:9px 14px;border-radius:15px;font-size:0.855rem;line-height:1.6;word-break:break-word;}
+.bubble.bot{background:#242424;border:1px solid rgba(255,255,255,0.07);border-radius:15px 15px 15px 4px;color:var(--text);}
+.bubble.user{background:var(--yellow);color:#111;font-weight:600;border-radius:15px 15px 4px 15px;}
+.bubble strong{font-weight:700;}
+.bubble em{color:var(--yellow);font-style:normal;}
+.bubble.bot em{color:var(--yellow);}
+.bubble a{color:var(--yellow);text-decoration:underline;}
+
+.typing-row{display:flex;gap:9px;align-items:flex-end;animation:popIn .3s ease both;}
+.typing-dots{background:#242424;border:1px solid rgba(255,255,255,0.07);border-radius:15px 15px 15px 4px;padding:11px 15px;display:flex;gap:4px;align-items:center;}
+.typing-dots span{width:5px;height:5px;border-radius:50%;background:var(--gray);animation:dot 1.2s ease-in-out infinite;}
+.typing-dots span:nth-child(2){animation-delay:.15s;}
+.typing-dots span:nth-child(3){animation-delay:.3s;}
+@keyframes dot{0%,60%,100%{transform:scale(.7);opacity:.4;}30%{transform:scale(1);opacity:1;}}
+
+.actions-row{display:flex;gap:7px;flex-wrap:wrap;padding-left:37px;animation:popIn .35s .1s ease both;}
+.act-btn{padding:6px 14px;border-radius:var(--radius);border:1px solid rgba(245,197,24,0.38);background:transparent;color:var(--yellow);font-size:0.74rem;font-weight:600;cursor:pointer;font-family:var(--body);transition:background .2s,transform .2s;}
+.act-btn:hover{background:rgba(245,197,24,0.1);transform:translateY(-1px);}
+.act-btn.primary{background:var(--yellow);color:#111;border-color:var(--yellow);}
+.act-btn.primary:hover{background:var(--yellow2);}
+
+.time-div{text-align:center;font-size:0.62rem;color:var(--gray2);display:flex;align-items:center;gap:8px;}
+.time-div::before,.time-div::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.05);}
+
+/* panel chips */
+.panel-chips-wrap{flex-shrink:0;padding:8px 18px;border-top:1px solid rgba(255,255,255,0.06);}
+.panel-chips{display:flex;gap:6px;flex-wrap:wrap;}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:var(--radius);background:#222;border:1px solid rgba(255,255,255,0.07);font-size:0.73rem;font-weight:500;color:var(--text);cursor:pointer;transition:background .2s,border-color .2s,color .2s;white-space:nowrap;}
+.chip:hover{background:#2a2a2a;border-color:var(--yellow);color:var(--yellow);}
+.chip-icon{font-size:0.78rem;}
+
+/* panel input */
+.panel-input-wrap{flex-shrink:0;padding:8px 14px 14px;padding-bottom:max(14px,env(safe-area-inset-bottom));}
+.panel-input-row{display:flex;align-items:center;gap:9px;background:#1e1e1e;border:1px solid var(--border);border-radius:50px;padding:7px 7px 7px 18px;transition:border-color .2s;}
+.panel-input-row:focus-within{border-color:rgba(245,197,24,0.4);}
+.panel-input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:0.875rem;min-width:0;}
+.panel-input::placeholder{color:var(--gray2);}
+.panel-send{width:36px;height:36px;border-radius:50%;background:var(--yellow);color:#111;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s,transform .2s;border:none;cursor:pointer;}
+.panel-send:hover{background:var(--yellow2);transform:scale(1.06);}
+.panel-send svg{width:14px;height:14px;}
+
+/* ─── Rich content ───────────────────────────── */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+.stat-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:9px;padding:9px 12px;text-align:center;}
+.stat-num{display:block;font-size:1.2rem;font-weight:800;color:var(--yellow);font-family:var(--font);}
+.stat-label{display:block;font-size:0.65rem;color:var(--gray);margin-top:2px;line-height:1.3;}
+
+.skills-cols{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;}
+.skills-col h4{font-size:0.62rem;text-transform:uppercase;letter-spacing:.1em;color:var(--yellow);margin-bottom:7px;font-family:var(--font);}
+.pill-list{display:flex;flex-wrap:wrap;gap:5px;}
+.pill{font-size:0.7rem;padding:3px 9px;border-radius:50px;background:rgba(245,197,24,0.06);border:1px solid rgba(245,197,24,0.16);color:var(--gray);}
+
+.proj-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:9px;padding:11px 13px;margin-top:9px;transition:border-color .2s;}
+.proj-card:hover{border-color:rgba(245,197,24,0.28);}
+.proj-num{font-size:0.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gray2);margin-bottom:3px;}
+.proj-card h4{font-size:0.85rem;font-weight:700;margin-bottom:4px;color:var(--white);font-family:var(--font);}
+.proj-card p{font-size:0.75rem;color:var(--gray);line-height:1.6;margin-bottom:9px;}
+.proj-tags{display:flex;gap:5px;flex-wrap:wrap;}
+.proj-tag{font-size:0.6rem;padding:2px 7px;border-radius:50px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);color:var(--gray);}
+
+/* Film grid */
+.film-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;}
+.film-grid-card{background:#1c1c1c;border:1px solid rgba(255,255,255,0.07);border-radius:11px;overflow:hidden;transition:border-color .25s,transform .2s;}
+.film-grid-card:hover{border-color:rgba(245,197,24,0.35);transform:translateY(-2px);}
+.film-poster{position:relative;aspect-ratio:16/9;overflow:hidden;background:#181818;}
+.film-poster img{width:100%;height:100%;object-fit:cover;display:block;}
+.film-poster-fallback{display:none;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#252525);color:var(--gray2);}
+.film-poster-fallback span{font-size:0.6rem;font-family:monospace;color:var(--gray2);padding:0 6px;word-break:break-all;text-align:center;}
+.film-overlay{position:absolute;inset:0;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;transition:background .25s;}
+.film-grid-card:hover .film-overlay{background:rgba(0,0,0,0.5);}
+.film-play-btn{width:42px;height:42px;border-radius:50%;background:var(--yellow);color:#111;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(0.8);transition:opacity .25s,transform .25s;}
+.film-grid-card:hover .film-play-btn{opacity:1;transform:scale(1);}
+.film-info{padding:10px 12px 12px;}
+.film-number{font-size:0.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray2);margin-bottom:2px;}
+.film-title{font-family:var(--font);font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:1px;}
+.film-type{font-size:0.68rem;color:var(--gray);margin-bottom:8px;}
+.film-awards-list{display:flex;flex-direction:column;gap:3px;margin-bottom:10px;}
+.award-item{display:flex;align-items:center;gap:6px;font-size:0.7rem;color:var(--text);}
+.award-trophy{font-size:0.75rem;flex-shrink:0;}
+.film-link{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:50px;background:rgba(245,197,24,0.1);border:1px solid rgba(245,197,24,0.28);color:var(--yellow);font-size:0.7rem;font-weight:600;transition:background .2s;}
+.film-link:hover{background:rgba(245,197,24,0.2);text-decoration:none;color:var(--yellow);}
+.film-link svg{width:11px;height:11px;}
+
+/* Education */
+.edu-timeline{display:flex;flex-direction:column;gap:0;margin-top:10px;position:relative;padding-left:20px;}
+.edu-timeline::before{content:'';position:absolute;left:5px;top:6px;bottom:6px;width:1.5px;background:linear-gradient(to bottom,var(--yellow),#7c5cbf,transparent);}
+.edu-item{position:relative;padding-bottom:14px;}
+.edu-item:last-child{padding-bottom:0;}
+.edu-dot{position:absolute;left:-17px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--bg2);border:2px solid var(--yellow);}
+.edu-item.current .edu-dot{background:var(--yellow);box-shadow:0 0 8px rgba(245,197,24,0.4);}
+.edu-degree{font-size:0.83rem;font-weight:700;color:var(--white);margin-bottom:1px;font-family:var(--font);}
+.edu-inst{font-size:0.7rem;color:var(--yellow);font-weight:500;margin-bottom:3px;}
+.edu-sub{font-size:0.72rem;color:var(--gray);line-height:1.5;}
+.edu-em{color:rgba(245,197,24,0.8);font-style:italic;}
+.edu-badge-row{margin-top:5px;}
+.edu-badge-extra{display:inline-flex;align-items:center;gap:4px;font-size:0.64rem;padding:2px 9px;border-radius:50px;background:rgba(124,92,191,0.1);border:1px solid rgba(124,92,191,0.25);color:#c4b5fd;}
+
+/* Experience */
+.exp-timeline{display:flex;flex-direction:column;gap:12px;margin-top:10px;}
+.exp-item{display:flex;gap:11px;align-items:flex-start;}
+.exp-icon{width:34px;height:34px;border-radius:9px;background:rgba(245,197,24,0.08);border:1px solid rgba(245,197,24,0.16);display:flex;align-items:center;justify-content:center;font-size:0.95rem;flex-shrink:0;margin-top:1px;}
+.exp-role{font-family:var(--font);font-size:0.83rem;font-weight:700;color:var(--white);margin-bottom:1px;}
+.exp-org{font-size:0.7rem;color:var(--yellow);font-weight:500;margin-bottom:4px;}
+.exp-desc{font-size:0.73rem;color:var(--gray);line-height:1.6;}
+
+/* Contact */
+.contact-list{display:flex;flex-direction:column;gap:7px;margin-top:10px;}
+.contact-item{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:9px;border:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02);color:var(--gray);font-size:0.78rem;transition:border-color .2s,color .2s;}
+.contact-item:hover{border-color:var(--yellow);color:var(--yellow);}
+.contact-item svg{width:13px;height:13px;flex-shrink:0;}
+
+/* Form */
+.form-wrap{display:flex;flex-direction:column;gap:9px;margin-top:10px;}
+.form-field{display:flex;flex-direction:column;gap:3px;}
+.form-field label{font-size:0.61rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray2);}
+.form-field input,.form-field textarea{background:#1e1e1e;border:1px solid rgba(255,255,255,0.08);border-radius:7px;padding:8px 11px;font-size:0.8rem;color:var(--text);outline:none;transition:border-color .2s;resize:vertical;font-family:var(--body);}
+.form-field input::placeholder,.form-field textarea::placeholder{color:var(--gray2);}
+.form-field input:focus,.form-field textarea:focus{border-color:var(--yellow);}
+.form-submit{align-self:flex-start;padding:8px 18px;border-radius:50px;background:var(--yellow);color:#111;font-size:0.8rem;font-weight:700;border:none;cursor:pointer;transition:background .2s;font-family:var(--font);}
+.form-submit:hover{background:var(--yellow2);}
+.form-success{display:none;padding:8px 11px;border-radius:7px;background:rgba(72,187,120,0.1);border:1px solid rgba(72,187,120,0.25);color:#68d391;font-size:0.77rem;}
+
+/* ─── Responsive ─────────────────────────────── */
+@media(max-width:900px){
+  .testimonial-block,.hero-btns-block,.side-name{display:none;}
+  .hero{padding:60px 20px 100px;}
+}
+@media(max-width:600px){
+  :root{--panel-h:88vh;}
+  .hero-heading{font-size:2rem;}
+  .photo-circle-bg{width:170px;height:170px;}
+  .hero-photo{height:230px;}
+  .film-grid{grid-template-columns:1fr;}
+  .bubble{max-width:86%;}
+  .chat-fab{bottom:20px;right:20px;width:50px;height:50px;}
+}
+@media(hover:none){
+  .hero-btn:hover,.act-btn:hover,.film-link:hover,.form-submit:hover,.panel-send:hover{transform:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- Rotated side labels -->
+<div class="side-name left">Sanka Rambukwella · Researcher · Filmmaker</div>
+<div class="side-name right">Sanka Rambukwella · Researcher · Filmmaker</div>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="topbar-btns">
+    <button class="topbar-btn" title="Theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+    <button class="topbar-btn" title="Settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ══ HERO — full page, always visible ══════════ -->
+<section class="hero" id="hero">
+  <div class="hello-badge">
+    <span class="q">"</span>Hello!<span class="q2">"</span>
+  </div>
+
+  <h1 class="hero-heading">
+    I'm <span class="yellow">Sanka,</span><br>
+    Researcher &amp; Developer
+  </h1>
+
+  <!-- Role pills -->
+  <div class="roles-wrap">
+    <span class="role-pill"><span class="dot"></span>Researcher</span>
+    <span class="role-pill"><span class="dot"></span>Sociologist</span>
+    <span class="role-pill"><span class="dot"></span>Filmmaker</span>
+    <span class="role-pill"><span class="dot"></span>Legal Scholar</span>
+    <span class="role-pill"><span class="dot"></span>Fullstack Developer</span>
+  </div>
+
+  <!-- Photo + side panels -->
+  <div class="hero-stage">
+    <!-- Testimonial left -->
+    <div class="testimonial-block">
+      <span class="quote-mark">"</span>
+      <p class="testimonial-text">Sanka brings a rare combination of technical depth and social insight — he transforms complex ideas into high-performance, meaningful digital experiences.</p>
+      <div class="testimonial-author">Amal Perera · Tech Lead</div>
+    </div>
+
+    <!-- Photo -->
+    <div class="photo-wrap">
+      <div class="photo-circle-bg"></div>
+      <img src="assets/profile.jpg" alt="Sanka Rambukwella" class="hero-photo"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
+      <div class="hero-photo-fallback" style="display:none;">SR</div>
+    </div>
+
+    <!-- Buttons right -->
+    <div class="hero-btns-block">
+      <button class="hero-btn primary" id="aboutBtn">More About Me</button>
+      <button class="hero-btn outline" id="filmsBtn">Watch My Films</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CHAT FAB ════════════════════════════════ -->
+<button class="chat-fab" id="chatFab" title="Ask me anything">
+  <div class="chat-fab-pulse"></div>
+  <!-- chat icon -->
+  <svg class="icon-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+  <!-- close icon -->
+  <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+</button>
+
+<!-- ══ CHAT PANEL ══════════════════════════════ -->
+<div class="chat-panel" id="chatPanel">
+  <!-- Handle -->
+  <div class="panel-handle"><div class="panel-handle-bar"></div></div>
+
+  <!-- Header -->
+  <div class="panel-header">
+    <div class="panel-header-left">
+      <div class="panel-av">SR</div>
+      <div>
+        <div class="panel-title">Sanka Rambukwella</div>
+        <div class="panel-subtitle"><span class="panel-online"></span>Online · Ask me anything</div>
+      </div>
+    </div>
+    <button class="panel-close" id="panelClose">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="panel-divider"></div>
+
+  <!-- Messages feed -->
+  <div class="chat-feed" id="chatFeed">
+    <div id="chatMessages"></div>
+  </div>
+
+  <!-- Quick chips -->
+  <div class="panel-chips-wrap">
+    <div class="panel-chips">
+      <button class="chip" data-section="about"><span class="chip-icon">👤</span>About</button>
+      <button class="chip" data-section="education"><span class="chip-icon">🎓</span>Education</button>
+      <button class="chip" data-section="experience"><span class="chip-icon">💼</span>Experience</button>
+      <button class="chip" data-section="skills"><span class="chip-icon">⚙️</span>Skills</button>
+      <button class="chip" data-section="projects"><span class="chip-icon">🖥️</span>Projects</button>
+      <button class="chip" data-section="films"><span class="chip-icon">🎬</span>Films</button>
+      <button class="chip" data-section="contact"><span class="chip-icon">✉️</span>Contact</button>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="panel-input-wrap">
+    <div class="panel-input-row">
+      <input type="text" class="panel-input" id="userInput" placeholder="Ask me about education, films, projects…" autocomplete="off" spellcheck="false"/>
+      <button class="panel-send" id="sendBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCRIPT ══════════════════════════════════ -->
+<script>
+'use strict';
+
+/* ─ DOM ─ */
+const hero       = document.getElementById('hero');
+const chatFab    = document.getElementById('chatFab');
+const chatPanel  = document.getElementById('chatPanel');
+const panelClose = document.getElementById('panelClose');
+const chatFeed   = document.getElementById('chatFeed');
+const chatMsgs   = document.getElementById('chatMessages');
+const userInput  = document.getElementById('userInput');
+const sendBtn    = document.getElementById('sendBtn');
+const chips      = document.querySelectorAll('.chip[data-section]');
+
+let isTyping = false;
+let panelOpen = false;
+let chatInitDone = false;
+
+/* ─ Panel open/close ─ */
+function openPanel() {
+  panelOpen = true;
+  chatPanel.classList.add('open');
+  chatFab.classList.add('open');
+  hero.classList.add('pushed');
+  if (!chatInitDone) { chatInitDone = true; initChat(); }
+  setTimeout(() => userInput.focus(), 450);
+}
+function closePanel() {
+  panelOpen = false;
+  chatPanel.classList.remove('open');
+  chatFab.classList.remove('open');
+  hero.classList.remove('pushed');
+}
+chatFab.addEventListener('click', () => panelOpen ? closePanel() : openPanel());
+panelClose.addEventListener('click', closePanel);
+
+/* hero buttons trigger panel + section */
+document.getElementById('aboutBtn').addEventListener('click', () => { openPanel(); setTimeout(() => triggerSection('about'), 200); });
+document.getElementById('filmsBtn').addEventListener('click', () => { openPanel(); setTimeout(() => triggerSection('films'), 200); });
+
+/* chip buttons */
+chips.forEach(c => c.addEventListener('click', () => { if(!panelOpen) openPanel(); triggerSection(c.dataset.section); }));
+
+/* ─ Content library ─ */
+const SECTIONS = {
+  about: {
+    messages: [
+      { html: `I'm a multidisciplinary professional combining <strong>research</strong>, <strong>sociology</strong>, <strong>law</strong>, and <strong>creative media</strong> — with hands-on skills in fullstack web development.` },
+      { html: `<div class="stat-grid"><div class="stat-card"><span class="stat-num">5</span><span class="stat-label">Fields of Expertise</span></div><div class="stat-card"><span class="stat-num">10+</span><span class="stat-label">Projects Built</span></div><div class="stat-card"><span class="stat-num">4</span><span class="stat-label">Academic Degrees</span></div><div class="stat-card"><span class="stat-num">🏆</span><span class="stat-label">Award-Winning Films</span></div></div>` }
+    ],
+    actions: [
+      { label: 'Education', section: 'education' },
+      { label: 'Experience', section: 'experience' },
+      { label: '🎬 Films', section: 'films' },
+      { label: 'Download CV', href: 'assets/cv.pdf', download: true }
+    ]
+  },
+
+  education: {
+    messages: [
+      { html: `My academic journey spans <strong>sociology</strong>, <strong>law</strong>, <strong>criminology</strong>, and <strong>social work</strong> — across Sri Lanka and Europe.` },
+      { html: `<div class="edu-timeline">
+  <div class="edu-item">
+    <div class="edu-dot"></div>
+    <div class="edu-degree">MA in Sociology</div>
+    <div class="edu-inst">University of Colombo</div>
+    <div class="edu-sub">Thesis: <em class="edu-em">"Social Relationship Between Tsunami Relocated Community and Host Community"</em></div>
+  </div>
+  <div class="edu-item">
+    <div class="edu-dot"></div>
+    <div class="edu-degree">LLB Degree</div>
+    <div class="edu-inst">Open University of Sri Lanka</div>
+    <div class="edu-sub">Law, legal frameworks, and intersection with technology and social justice.</div>
+  </div>
+  <div class="edu-item">
+    <div class="edu-dot"></div>
+    <div class="edu-degree">B Special Degree in Sociology</div>
+    <div class="edu-inst">University of Colombo</div>
+    <div class="edu-sub">Specialised social theory, research methods, and applied sociology.</div>
+    <div class="edu-badge-row"><span class="edu-badge-extra">+ Social Work Diploma · University of Ljubljana, Slovenia</span></div>
+  </div>
+  <div class="edu-item current">
+    <div class="edu-dot"></div>
+    <div class="edu-degree">PGDP in Criminology &amp; Criminal Justice</div>
+    <div class="edu-inst">University of Sri Jayewardenepura</div>
+    <div class="edu-sub">Criminal justice systems, forensic social work, and policy analysis.</div>
+  </div>
+</div>` }
+    ],
+    actions: [
+      { label: 'Experience', section: 'experience' },
+      { label: 'About Me', section: 'about' },
+      { label: 'Download CV', href: 'assets/cv.pdf', download: true }
+    ]
+  },
+
+  experience: {
+    messages: [
+      { html: `A career spanning <strong>academic research</strong>, <strong>social work</strong>, and <strong>media</strong> — always working to understand and communicate the human experience.` },
+      { html: `<div class="exp-timeline">
+  <div class="exp-item">
+    <div class="exp-icon">🎓</div>
+    <div class="exp-body">
+      <div class="exp-role">Research Supervisor</div>
+      <div class="exp-org">SPARC — University of Colombo</div>
+      <div class="exp-desc">Supervised undergraduate and postgraduate research in the social sciences. Guided methodology, fieldwork, and academic writing.</div>
+    </div>
+  </div>
+  <div class="exp-item">
+    <div class="exp-icon">🤝</div>
+    <div class="exp-body">
+      <div class="exp-role">Social Worker</div>
+      <div class="exp-org">NIMH (National Institute of Mental Health) &amp; Victoria Home</div>
+      <div class="exp-desc">Direct social work services in clinical and residential settings. Case management, counselling support, and community reintegration for vulnerable populations.</div>
+    </div>
+  </div>
+  <div class="exp-item">
+    <div class="exp-icon">📺</div>
+    <div class="exp-body">
+      <div class="exp-role">Media &amp; Journalism</div>
+      <div class="exp-org">ITN · Ravaya · Irudina</div>
+      <div class="exp-desc">Television production at ITN. Print journalism at Ravaya and Irudina — social affairs, culture, and investigative reporting.</div>
+    </div>
+  </div>
+</div>` }
+    ],
+    actions: [
+      { label: 'Education', section: 'education' },
+      { label: 'Projects', section: 'projects' },
+      { label: 'Download CV', href: 'assets/cv.pdf', download: true }
+    ]
+  },
+
+  skills: {
+    messages: [
+      { html: `Tools, technologies, and disciplines I work across:` },
+      { html: `<div class="skills-cols">
+  <div class="skills-col"><h4>Web Development</h4><div class="pill-list"><span class="pill">HTML5</span><span class="pill">CSS3</span><span class="pill">JavaScript</span><span class="pill">Google Apps Script</span><span class="pill">Sheets API</span><span class="pill">UI/UX Design</span></div></div>
+  <div class="skills-col"><h4>Research &amp; Law</h4><div class="pill-list"><span class="pill">Qualitative Research</span><span class="pill">Sociology Analysis</span><span class="pill">Criminology</span><span class="pill">Legal Studies</span><span class="pill">Social Work</span></div></div>
+  <div class="skills-col"><h4>Media &amp; Film</h4><div class="pill-list"><span class="pill">Film Direction</span><span class="pill">Screenwriting</span><span class="pill">TV Production</span><span class="pill">Print Journalism</span></div></div>
+</div>` }
+    ],
+    actions: [{ label: 'Projects', section: 'projects' }, { label: 'Download CV', href: 'assets/cv.pdf', download: true }]
+  },
+
+  projects: {
+    messages: [
+      { html: `Web applications I've built — each one solving a real problem:` },
+      { html: `<div class="proj-card"><div class="proj-num">Project 01</div><h4>FunChat — Private Chat App</h4><p>One-time link private chat. Messages expire with the link. Google Sheets backend for serverless, lightweight messaging.</p><div class="proj-tags"><span class="proj-tag">HTML</span><span class="proj-tag">CSS</span><span class="proj-tag">JavaScript</span><span class="proj-tag">Google Sheets</span></div></div>
+<div class="proj-card"><div class="proj-num">Project 02</div><h4>IQ Test Platform</h4><p>Bilingual IQ testing with adaptive scoring and real-time leaderboard. Sinhala + English interfaces.</p><div class="proj-tags"><span class="proj-tag">Bilingual</span><span class="proj-tag">Apps Script</span><span class="proj-tag">Leaderboard</span></div></div>
+<div class="proj-card"><div class="proj-num">Project 03</div><h4>DDG Logistics System</h4><p>Comprehensive logistics platform with tracking, reporting, and dashboards for a real business client.</p><div class="proj-tags"><span class="proj-tag">Apps Script</span><span class="proj-tag">Logistics</span><span class="proj-tag">Dashboard</span></div></div>` }
+    ],
+    actions: [{ label: 'Skills', section: 'skills' }, { label: 'Watch Films', section: 'films' }, { label: 'Contact Me', section: 'contact' }]
+  },
+
+  films: {
+    messages: [
+      { html: `🎬 Award-winning short films merging social commentary with cinematic storytelling:` },
+      { html: `<div class="film-grid">
+  <div class="film-grid-card">
+    <div class="film-poster">
+      <img src="assets/bodilima-poster.jpg" alt="Bodilima" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
+      <div class="film-poster-fallback"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28"><rect x="2" y="2" width="20" height="20" rx="2"/><polygon points="9 8 16.5 12 9 16 9 8" fill="currentColor" stroke="none"/></svg><span>bodilima-poster.jpg</span></div>
+      <div class="film-overlay"><a href="https://youtu.be/L9B_aWtVVTI?si=OyU7IZ54HioZbYCq" target="_blank" rel="noopener" class="film-play-btn"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="5 3 19 12 5 21 5 3"/></svg></a></div>
+    </div>
+    <div class="film-info">
+      <div class="film-number">Film 01</div>
+      <h4 class="film-title">Bodilima</h4>
+      <p class="film-type">Short Film · Director &amp; Writer</p>
+      <div class="film-awards-list">
+        <div class="award-item"><span class="award-trophy">🏆</span><span>SIGNIS Award 2018</span></div>
+        <div class="award-item"><span class="award-trophy">🏆</span><span>ITN Digicon6 Award</span></div>
+      </div>
+      <a href="https://youtu.be/L9B_aWtVVTI?si=OyU7IZ54HioZbYCq" target="_blank" rel="noopener" class="film-link"><svg viewBox="0 0 24 24" fill="currentColor" width="11" height="11"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 00.5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 002.1 2.1C4.5 20.4 12 20.4 12 20.4s7.5 0 9.4-.5a3 3 0 002.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.8 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg> YouTube</a>
+    </div>
+  </div>
+  <div class="film-grid-card">
+    <div class="film-poster">
+      <img src="assets/betterhalf-poster.jpg" alt="My Better Half" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
+      <div class="film-poster-fallback"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28"><rect x="2" y="2" width="20" height="20" rx="2"/><polygon points="9 8 16.5 12 9 16 9 8" fill="currentColor" stroke="none"/></svg><span>betterhalf-poster.jpg</span></div>
+      <div class="film-overlay"><a href="https://drive.google.com/file/d/1PEUtmbQWo89g58xjQ3g92XzCkztbhe4P/view?usp=drive_link" target="_blank" rel="noopener" class="film-play-btn"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="5 3 19 12 5 21 5 3"/></svg></a></div>
+    </div>
+    <div class="film-info">
+      <div class="film-number">Film 02</div>
+      <h4 class="film-title">My Better Half</h4>
+      <p class="film-type">Short Film · Director &amp; Writer</p>
+      <div class="film-awards-list">
+        <div class="award-item"><span class="award-trophy">🥈</span><span>Semi-Finalist · Greece 2022</span></div>
+        <div class="award-item"><span class="award-trophy">🌍</span><span>Official Selection · Spain</span></div>
+        <div class="award-item"><span class="award-trophy">🌐</span><span>LIFT OFF Global Network</span></div>
+      </div>
+      <a href="https://drive.google.com/file/d/1PEUtmbQWo89g58xjQ3g92XzCkztbhe4P/view?usp=drive_link" target="_blank" rel="noopener" class="film-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polygon points="5 3 19 12 5 21 5 3"/></svg> Drive</a>
+    </div>
+  </div>
+</div>` }
+    ],
+    actions: [{ label: 'Projects', section: 'projects' }, { label: 'Contact Me', section: 'contact' }]
+  },
+
+  contact: {
+    messages: [
+      { html: `Always open to new collaborations, research opportunities, and creative projects.` },
+      { html: `<div class="contact-list">
+  <a href="mailto:rsanka.rambukwella@gmail.com" class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>rsanka.rambukwella@gmail.com</a>
+  <a href="https://www.linkedin.com/in/sanka-rambukwella-a40067342/" target="_blank" rel="noopener" class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn — Sanka Rambukwella</a>
+  <a href="https://github.com/sanka-rambukwella" target="_blank" rel="noopener" class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>GitHub — sanka-rambukwella</a>
+</div>` },
+      { html: `Or send me a direct message:<div class="form-wrap"><div class="form-field"><label>Name</label><input type="text" id="cfName" placeholder="Full name"/></div><div class="form-field"><label>Email</label><input type="email" id="cfEmail" placeholder="your@email.com"/></div><div class="form-field"><label>Message</label><textarea id="cfMessage" rows="3" placeholder="Tell me about your project…"></textarea></div><button class="form-submit" id="cfSubmit">Send Message</button><div class="form-success" id="cfSuccess">✓ Sent! I'll reply within 24 hours.</div></div>` }
+    ],
+    actions: [{ label: 'Projects', section: 'projects' }]
+  },
+
+  cv: {
+    messages: [{ html: `Here's my complete <strong>curriculum vitae</strong>:` }],
+    actions: [{ label: 'Download CV', href: 'assets/cv.pdf', download: true, primary: true }, { label: 'About Me', section: 'about' }]
+  }
+};
+
+const UNKNOWN = {
+  messages: [{ html: `Hmm, I didn't catch that. Try: <strong>about</strong> · <strong>education</strong> · <strong>experience</strong> · <strong>skills</strong> · <strong>projects</strong> · <strong>films</strong> · <strong>contact</strong>` }],
+  actions: [{ label: 'About Me', section: 'about' }, { label: 'Education', section: 'education' }, { label: 'Films', section: 'films' }]
+};
+
+/* ─ Helpers ─ */
+function scrollBottom() { chatFeed.scrollTo({ top: chatFeed.scrollHeight, behavior: 'smooth' }); }
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function renderBot(html, showAv = true) {
+  const row = document.createElement('div'); row.className = 'msg-row bot';
+  if (showAv) { const av = document.createElement('div'); av.className = 'msg-av'; av.textContent = 'SR'; row.appendChild(av); }
+  const bbl = document.createElement('div'); bbl.className = 'bubble bot'; bbl.innerHTML = html;
+  row.appendChild(bbl); chatMsgs.appendChild(row); scrollBottom();
+  const cf = bbl.querySelector('#cfSubmit'); if (cf) cf.addEventListener('click', handleForm);
+}
+function renderUser(text) {
+  const row = document.createElement('div'); row.className = 'msg-row user';
+  const bbl = document.createElement('div'); bbl.className = 'bubble user'; bbl.textContent = text;
+  row.appendChild(bbl); chatMsgs.appendChild(row); scrollBottom();
+}
+function showTyping() {
+  const row = document.createElement('div'); row.className = 'typing-row';
+  const av = document.createElement('div'); av.className = 'msg-av'; av.textContent = 'SR';
+  const dots = document.createElement('div'); dots.className = 'typing-dots'; dots.innerHTML = '<span></span><span></span><span></span>';
+  row.appendChild(av); row.appendChild(dots); chatMsgs.appendChild(row); scrollBottom(); return row;
+}
+function renderActions(actions) {
+  if (!actions?.length) return;
+  const row = document.createElement('div'); row.className = 'actions-row';
+  actions.forEach(a => {
+    const btn = document.createElement(a.href ? 'a' : 'button');
+    btn.className = 'act-btn' + (a.primary ? ' primary' : ''); btn.textContent = a.label;
+    if (a.href) { btn.href = a.href; if (a.download) btn.setAttribute('download', ''); btn.target = '_blank'; }
+    else if (a.section) btn.addEventListener('click', () => triggerSection(a.section));
+    row.appendChild(btn);
+  });
+  chatMsgs.appendChild(row); scrollBottom();
+}
+function addDivider(label) {
+  const d = document.createElement('div'); d.className = 'time-div'; d.textContent = label; chatMsgs.appendChild(d);
+}
+
+/* ─ Section engine ─ */
+async function triggerSection(key) {
+  if (isTyping) return; isTyping = true;
+  const sec = SECTIONS[key] || UNKNOWN;
+  addDivider(key.charAt(0).toUpperCase() + key.slice(1));
+  for (let i = 0; i < sec.messages.length; i++) {
+    const t = showTyping(); await sleep(800 + Math.random() * 300); t.remove();
+    renderBot(sec.messages[i].html, i === 0);
+    if (i < sec.messages.length - 1) await sleep(320);
+  }
+  await sleep(220); renderActions(sec.actions); isTyping = false; scrollBottom();
+}
+
+/* ─ Contact form ─ */
+function handleForm() {
+  const n = document.getElementById('cfName')?.value.trim();
+  const e = document.getElementById('cfEmail')?.value.trim();
+  const m = document.getElementById('cfMessage')?.value.trim();
+  if (!n || !e || !m) { alert('Please fill in all fields.'); return; }
+  const btn = document.getElementById('cfSubmit'); btn.disabled = true; btn.textContent = 'Sending…';
+  setTimeout(() => {
+    document.getElementById('cfName').value = ''; document.getElementById('cfEmail').value = ''; document.getElementById('cfMessage').value = '';
+    btn.textContent = 'Send Message'; btn.disabled = false;
+    const s = document.getElementById('cfSuccess'); if (s) { s.style.display = 'block'; setTimeout(() => { s.style.display = 'none'; }, 6000); }
+  }, 1500);
+}
+
+/* ─ User text input ─ */
+function handleInput() {
+  const raw = userInput.value.trim(); if (!raw || isTyping) return;
+  userInput.value = ''; renderUser(raw);
+  const cmd = raw.toLowerCase().replace(/[^a-z]/g, '');
+  const map = {
+    about:'about', me:'about', whoareyou:'about', whoami:'about',
+    skills:'skills', skill:'skills',
+    projects:'projects', project:'projects', work:'projects', portfolio:'projects',
+    films:'films', film:'films', movie:'films', movies:'films', filmmaking:'films', bodilima:'films', betterhalf:'films', mybetterhalf:'films',
+    education:'education', edu:'education', study:'education', degree:'education', qualifications:'education', academic:'education',
+    experience:'experience', exp:'experience', career:'experience', job:'experience', jobs:'experience', sparc:'experience', media:'experience', journalism:'experience', socialwork:'experience', nimh:'experience',
+    contact:'contact', email:'contact', hire:'contact', hireme:'contact',
+    cv:'cv', resume:'cv', download:'cv',
+  };
+  setTimeout(() => triggerSection(map[cmd] || '__unknown__'), 320);
+}
+sendBtn.addEventListener('click', handleInput);
+userInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleInput(); } });
+
+/* ─ Init chat (first open) ─ */
+async function initChat() {
+  isTyping = true; await sleep(400);
+  const t1 = showTyping(); await sleep(800); t1.remove();
+  renderBot(`👋 Hi! I'm <strong>Sanka Rambukwella</strong> — Researcher, Sociologist, Filmmaker, Legal Scholar &amp; Fullstack Developer.`);
+  await sleep(500);
+  const t2 = showTyping(); await sleep(900); t2.remove();
+  renderBot(`Ask me anything about my work, films, education, or research. What would you like to explore?`, false);
+  await sleep(300);
+  renderActions([
+    { label: 'About Me', section: 'about' },
+    { label: 'Education', section: 'education' },
+    { label: 'Experience', section: 'experience' },
+    { label: '🎬 Films', section: 'films' },
+    { label: 'Projects', section: 'projects' },
+    { label: 'Contact', section: 'contact' },
+  ]);
+  isTyping = false;
+}
+</script>
+</body>
+</html>
